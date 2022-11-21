@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>MyNewGameHandTracking.py</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #808080;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #cc7832;}
+.s3 { color: #6897bb;}
+.s4 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MyNewGameHandTracking.py</font>
+</center></td></tr></table>
+<pre><span class="s0"># mencoba module di project baru, jadi gaperlu nulis semua code nya :D</span>
+<span class="s2">import </span><span class="s1">cv2</span>
+<span class="s2">import </span><span class="s1">mediapipe </span><span class="s2">as </span><span class="s1">mp</span>
+<span class="s2">import </span><span class="s1">time</span>
+<span class="s2">import </span><span class="s1">HandTrackingModule </span><span class="s2">as </span><span class="s1">htm</span>
+
+<span class="s1">pTime = </span><span class="s3">0  </span><span class="s0"># previous time</span>
+<span class="s1">cTime = </span><span class="s3">0  </span><span class="s0"># current time</span>
+<span class="s1">cap = cv2.VideoCapture(</span><span class="s3">0</span><span class="s1">)</span>
+<span class="s1">detector = htm.handDetector()</span>
+<span class="s2">while True</span><span class="s1">:</span>
+        <span class="s1">success</span><span class="s2">, </span><span class="s1">img = cap.read()</span>
+        <span class="s1">img = detector.findHands(img)</span>
+        <span class="s1">lmlist = detector.findPosition(img)</span>
+        <span class="s2">if </span><span class="s1">len(lmlist) != </span><span class="s3">0</span><span class="s1">:</span>
+                <span class="s1">print(lmlist[</span><span class="s3">4</span><span class="s1">])  </span><span class="s0"># print value dari mylist di any index, jika kita mau index 0, ya tulis 0</span>
+        <span class="s0"># if len(lmlist) != 0:</span>
+        <span class="s0"># print(lmlist[4])</span>
+        <span class="s0"># nanti akan work seperti x_position(mendatar) akan berubah seiring bergerak, dan y_position(tegak) juga akan berubah jika bergerak keatas</span>
+
+        <span class="s1">cTime = time.time()  </span><span class="s0"># akan give us the current time</span>
+        <span class="s1">fps = </span><span class="s3">1 </span><span class="s1">/ (cTime - pTime)</span>
+        <span class="s1">pTime = cTime</span>
+
+        <span class="s0"># display it on the screen jadi kita bisa lihat</span>
+        <span class="s1">cv2.putText(img</span><span class="s2">, </span><span class="s1">str(int(fps))</span><span class="s2">, </span><span class="s1">(</span><span class="s3">10</span><span class="s2">, </span><span class="s3">70</span><span class="s1">)</span><span class="s2">, </span><span class="s1">cv2.FONT_HERSHEY_PLAIN</span><span class="s2">, </span><span class="s3">3</span><span class="s2">, </span><span class="s1">(</span><span class="s3">255</span><span class="s2">, </span><span class="s3">0</span><span class="s2">, </span><span class="s3">255</span><span class="s1">)</span><span class="s2">, </span><span class="s3">3</span><span class="s1">)</span>
+
+        <span class="s1">cv2.imshow(</span><span class="s4">&quot;Image&quot;</span><span class="s2">, </span><span class="s1">img)</span>
+        <span class="s1">cv2.waitKey(</span><span class="s3">1</span><span class="s1">)</span></pre>
+</body>
+</html>
